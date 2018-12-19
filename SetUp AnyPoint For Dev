@@ -1,0 +1,313 @@
+MuleSoft Setup Instructions :)
+
+This repository contains instruction for general installation and configuration of MuleSoft Development Environments using Anypoint Studio. Settings, configuration, and other supporting information type files should be stored in this repository. Source code for each Mule Application (Mule Project) should be stored in its own repository.
+
+Create the following directories to align with this README file.
+
+mkdir C:\CoastCapitalSavings
+
+mkdir C:\CoastCapitalSavings\Integrations   //Clone this repository here.
+
+mkdir C:\CoastCapitalSavings\Integrations\Maven
+
+mkdir C:\CoastCapitalSavings\Integrations\MuleSoft
+
+mkdir C:\CoastCapitalSavings\Integrations\MuleSoft\workspace    //Clone Mule Application repositories here.
+
+If you are having difficulties connecting to GitHub through SSL certifications, run the following command to ignore SSL and authenticate with GitHub username and password.
+
+git config --global http.sslVerify false
+
+Dependencies
+
+The following components must be installed before running Anypoint Studio.
+•Java JDK
+•Apache Maven (Required for Maven MuleSoft Projects)
+
+Install Java
+
+Use java -version to check if java JDK is installed. If an error occurs then proceed to install Java with the following:
+1.Download Java from Oracle at: 64 bit JDK
+2.Run the download accepting default values
+3.Set the JAVA_HOME variable
+• Click on start
+• Right click on "Computer" and select "Properties"
+• Select "Advanced system settings"
+• Select "Environment Variables"
+• Create a new variable in the bottom window: NAME=JAVA_HOME Value='C:\Program Files\Java\jdk1.8.0_121' (example install location)
+•Test the JAVA_HOME variable with cd %JAVA_HOME% - if the directory is not found then check the environment variable against the actual install location to correct issue.
+
+Install Apache Maven
+
+A Java JDK must be installed before Apache Maven can be installed.
+
+1.Download Apache Maven. Apache Maven can be downloaded here. Apache Maven installation documentation can be found here. Apache Maven configuration documentation can be found here.
+
+
+2.Extract the Maven distribution archive into your application directory.
+
+C:\opt\apache-maven-3.3.9
+
+
+1.Ensure the system environment variable JAVA_HOME is created and points to your JDK. (see above to set)
+
+
+2.Add the Maven bin directory to your PATH system environment variable. (see JAVA_HOME example above for permanent change instructions)
+
+PATH=%PATH%;C:\opt\apache-maven-3.3.9\bin
+
+1.Test your Maven installation by running the following command in the command line.
+
+mvn -v
+
+1.Configure the local maven repository for MuleSoft. This ensures the local repository can be used by multiple users on the same machine. A sample settings.xml files, with the following settings is containted in this repository
+
+
+2.Edit the C:\opt\apache-maven-3.3.9\conf\settings.xml file.
+
+
+3.Add the following with the <settings> tags. xml <localRepository>C:\CoastCapitalSavings\Integrations\Maven\.m2\repository</localRepository>
+
+
+4.Add the following credentials to the <servers> tags. xml <server> <id>releases-ee</id> <username>mule.client</username> <password>mul3cl13nt</password> </server>
+
+
+5.Add the following to the <profiles> tags. xml <profile> <id>Mule</id> <activation> <activeByDefault>true</activeByDefault> </activation> <repositories> <repository> <id>codehaus-mule-repo</id> <name>codehaus-mule-repo</name> <url>https://repository-master.mulesoft.org/nexus/content/groups/public/</url> <layout>default</layout> <releases> <enabled>true</enabled> </releases> <snapshots> <enabled>true</enabled> </snapshots> </repository> <repository> <id>releases-ee</id> <name>MuleRepository</name> <url>https://repository-master.mulesoft.org/nexus/content/repositories/releases-ee</url> <layout>default</layout> <releases> <enabled>true</enabled> </releases> <snapshots> <enabled>true</enabled> </snapshots> </repository> </repositories> </profile>
+
+
+6.Add the appropriate proxy setting to the <proxies> tags. Note the user COASTCAPITAL\service.maven has been created to allow the Maven application to use the proxy.
+xml <proxy> <id>ccs-http-proxy</id> <active>true</active> <protocol>http</protocol> <host>tmgmlpr</host> <port>8080</port> <username>coastcapital\service.maven</username> <password>Password1!</password> <nonProxyHosts>localhost</nonProxyHosts> </proxy> <proxy> <id>ccs-https-proxy</id> <active>true</active> <protocol>https</protocol> <host>tmgmlpr</host> <port>8080</port> <username>coastcapital\service.maven</username> <password>Password1!</password> <nonProxyHosts>localhost</nonProxyHosts> </proxy>
+
+
+Install Anypoint Studio
+
+A Java JDK must be installed before Anypoint Studio can be run. Apache Maven must be installed before you can run a Maven Mule Project.
+
+1.Download Anypoint Studio. Anypoint Studio can be found here.
+
+
+2.Extract the Anypoint Studio distribution archive into your application directory.
+
+C:\opt\AnypointStudio
+
+1.Add xml encoding UTF-8 to AnypointStudio.ini file
+C:\opt\AnypointStudio\AnypointStudio.ini
+
+
+1.In Windows Explorer, navigate to folder - C:\opt\AnypointStudio
+
+
+2.Open AnypointStudio.ini file in Notepad++
+
+
+3.Add the line at the end of the file -Dfile.encoding=UTF-8
+
+
+4.Save the file.
+
+
+5.Run the Anypoint Studio executable file.
+
+
+C:\opt\AnypointStudio\AnypointStudio.exe
+
+1.When prompted, set the workspace to the appropriate directory - C:\CoastCapitalSaving\Integrations\MuleSoft\workspace.
+
+
+2.Ensure the "JRE System Library" is set to your JDK home directory. If a JRE is sourced, perform the following steps.
+
+
+3.In Anypoint Studio, navigate to "Window > Preferences > Java > Installed JREs"
+
+
+4.Click "Add", select "Standard VM", click "Next"
+
+
+5.Click "Directory", set to your JDK home directory - C:\Program Files\Java\jdk1.8.0_111, click "Finish"
+
+
+6.Select the JRE, click "Remove"
+
+
+7.Click "Ok"
+
+
+8.Configure Maven in Anypoint Studio.
+
+
+9.In Anypoint Studio, navigate to "Window > Preferences > Anypoint Studio > Maven".
+
+
+10.Set the "Maven installation home directory" to the appropriate directory = C:\opt\apache-maven-3.3.9.
+
+
+11.Set the "Base command line for build" to mvn clean package.
+
+
+12.Set the "Default groupId for new projects" appropriately - com.coastcapital.
+
+
+13.Click the "Test Maven Configuration" button. A green checkmark should appear beside the button.
+
+
+14.Add the M2_REPO to you Classpath Variables
+
+
+15.Navigate to "Windows > Preferences".
+
+
+16.Navigate to "Java > Build Path > Classpath Variables".
+
+
+17.Click "New...".
+
+
+18.Set the "Name:" field to: M2_REPO
+
+
+19.Set the "Path:" field to you local Maven repository: C:/CoastCapitalSavings/Integrations/Maven/.m2/repository
+
+
+20.Click "OK".
+
+
+21.Optional. If you would like to run Anypoint Studio from the command line, add the Anypoint Studio install directory to your PATH environment variable.
+
+PATH=%PATH%;C:\opt\AnypointStudio
+
+
+Install Anypoint Enterprise Security
+
+This is required to utilize secure property placeholders
+•Under the Help menu, select Install New Software…​ Mule opens the Install wizard.
+•Click the Add…​ button next to the Work with field.
+•In the Add Repository panel, enter a Name for the repository, such as "Anypoint Enterprise Security", and in the Location field, paste the corresponding link for every version. Check the Anypoint Enterprise Security Release Notes to find the correct update site.
+ The current value is: http://anypoint-enterprise-security-update-site.s3.amazonaws.com/1.6.2
+•click OK.
+•In the table, check the box to select Premium, then click Next. -Use the radio button to accept the terms of the license agreement, then click Finish. Anypoint Studio installs the desired Anypoint Enterprise Security, then asks that you restart the application. Upon relaunch, Studio displays a new palette group called Security which contains six new message processors.
+
+Install CloudHub Connector
+
+This is required to create CloudHub notifications from the Admin project
+•Under the Help menu, select Install New Software…​ Mule opens the Install wizard.
+•In the "Work With" field select the Anypoint Connectors Update Site - http://repository.mulesoft.org/connectors/releases/3.5.0
+•Type "Cloudhub Connector" In the search box
+•Wait until the "Pending" value is replaced by a list containing the "Cloudhub Connector for Mule 3.6.0+", Version 2.0.2.*
+•NOTE: On the VMs, where network connectivity is limited, un check the box saying "Contact all update sites during install to find required software"
+•NOTE2: On the VMs it can take several minutes for the pending value to be replaced by the Cloudhub adapter! In some cases, a timeout was experienced after which a restart of AnyPoint studio was required to complete the install.
+•Select the Cloudhub connector and click OK.
+•Use the radio button to accept the terms of the license agreement, then click Finish. Anypoint Studio installs the CloudHub connector, then asks that you restart the application. Up
+
+Recommended. Create a Test Maven Project
+
+The purpose of this is build your first Maven project which will populate your local Maven repository for the first time. Note, it may take a while for this process to run - you need to download many files, however files only need to be downloaded to your local repository once.
+1.In Anypoint Studio, click "File > New > Mule Project"
+2.Fill in the "Project Name:", set "test-mvn".
+3.Click the "Use Maven" checkbox.
+4.Click the "Finish" button to create the project.
+
+Validate the Local Maven Repository
+1.After creating the Maven project, the project dependencies should build automatically. This process should run without errors and you should see a "BUILD SUCESSFUL" message in the console.
+
+You can kick off this project manually by:
+1.Right click on the project folder in the package explorer, click "Mule", click "Update Project Dependencies".
+
+This can also be kicked off from the command line, see the Maven Trobleshooting section for details.
+1.Validate dependencies were added to the Local Maven repository located:
+C:\CoastCapitalSavings\Integrations\Maven\.m2\repository
+
+
+Troubleshooting Maven
+
+If you encounter errors when building your Project Dependencies, try running the Maven command in the command line.
+1.Navigate to the project directory containing the the pom.xml file. Run:
+```bash
+mvn clean install -U -X
+```
+
+
+The Coast Capital network uses a proxy to route traffic. Currently, the proxy settings are defined in the Maven settings.xml file, however the proxy is not picking up the username and password, causing requestes to be denied by the TMG firewall.
+
+Current workaround is to whitelist the domains Maven requires. The domains required will be shown in the console output (and errors) when running Maven in the command line. The appropriate command to build and update the local repository, run from the directory where the pom.xml file is located, is:
+mvn clean install -U
+
+
+The following domains have been whitelisted, to allow them to be accessed anonymously:
+•apache.org (refer to TMG rule named, "Allow mulesoft-training")
+•jfrog.org (refer to TMG rule named, "Allow mulesoft-training")
+•mulesoft.org (refer to TMG rule named, "Allow mulesoft-training")
+
+This fix should work for all users on the Coast Capital network.
+
+Additional Configuration for T24 Poject
+
+Because there are jar conflicts between the JMS JBoss jar files and the Mule runtime, a special build path adjutment is required to have Maven work. Right click on the project and edit the build path. Move the jboss-logging-spi-5.2.0.jar library above the Mule Server 3.8.3 EE runtime.
+
+Steps to set up new Mule Project
+
+Pre-requisites / if this is your first time setting up the workspace
+•Ensure the Java Runtime is set to a JDK
+•Ensure the M2_REPO variable is set to your local Maven repository
+•Set the client id and client secret in Preferences > Anypoint Studio > Anypoint Platform for API
+
+These are a list of steps to set-up a new Mule project from RAML.
+•Select Maven project when creating a new Mule project
+•Use APIKit Components (this generates the flows based on the RAML in Anypoint Studio)
+•Set the env and masterencryptionkey in the mule-app.properties file
+•Create the properties files (one for each environment), i.e. [projectName]-[env].properties in src/main/resources ◦Set the: ◾http.port (set in the properties file)
+◾https.port
+◾http.basepath (set the http listener in the main flow)
+◾api.name
+◾api.version
+◾client.id (encrypted) ??? (could be used in the preferences)
+◾client.secret ??? (could be used in the preferences)
+◾other? check other project properties files
+
+◦Update hard coded values to match created properties
+◦Change the http port in the HTTP listener to the setting, not hard coded default
+
+•Create the global.xml file ◦Create the Secure Properties Placeholder
+◦Create the API Autodiscovery configuration
+
+
+Running Projects Locally
+
+These steps are required to run local instances of your project - where you are calling a local API from a local API.
+
+Add certificate to Java Keystore
+•Open a cmd with administrator privileges
+•Ensure your JDK is added to your %PATH%
+
+java -version
+•Run the following command:
+
+keytool -export -alias cloudhub_app -file cloudhub_app.cer -keystore <path_to_project>\src\main\resources\cloudhub_app.jks
+•When prompted, enter the password (ask Nehal for project keystore password)
+•Run the following command:
+
+keytool -import -alias cloudhub_app -file cloudhub_app.cer -keystore <path_to_jdk>\jre\lib\security\cacerts
+•When prompted, enter the password (default Java keystore password)
+
+changeit 
+G2 certifcates to default Java cacerts file (truststore) 
+download G2.pem.cer file (see attachment in jira).  
+This file is an export of the root certificate from the browser
+
+Open cmd prompt as administrator
+
+determine java home 
+
+cd %JAVA_HOME%\jre\lib\security
+run the commands: 
+copy cacerts cacerts.bak
+
+keytool -import -keystore cacerts -alias nexus -file <Path_to_file>/nexus_september_2018.cer -storepass changeit
+Successful response: 
+...Trust this certificate? [no]: yes
+Certificate was added to keystore**
+
+Make sure that keytool did not report an error updating the file after reporting the cert was update.  If you get the message 		failed to update file or similar message then copy cacerts to C:\temp and run the above command on that version.  
+
+Run the command below to verify the cert has been updated.
+keytool -list -keystore cacerts -alias nexus
+
