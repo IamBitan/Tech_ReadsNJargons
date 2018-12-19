@@ -1,0 +1,690 @@
+ 
+Mulesoft Integration Developer Guide – Standards on Development
+ 
+ 
+1	Introduction
+1.1	Purpose
+The document is designed to provide onboarding process guidelines and to describe how to setup a Mulesoft developer environment for the Coast Capital Savings Integration team to use for new Mulesoft developers. Setting up a proper Mulesoft development environment is crucial for a successful use of the Mule Runtime.
+This document also details the API lifecycle, standards, development guidelines and API management best practices. This is a living and evolving document and it will be revised and updated regularly and stored in Teamwork Process Documents space.
+1.2	What is the Developer Guide?
+The Integration Developer Guide is a document that helps explain what software, standards, and specifications must be used and/or followed to deploy a successful integration within the Coast Capital Savings environment. After reading this document, the reader should have full understanding of which IT groups are involved to request software and security access to get started doing API development.  
+
+This document also describes the fundamentals of MuleSoft’s Anypoint Platform, but it is not intended to be educational at that level. Basic MuleSoft Anypoint Platform and Anypoint Studio training is recommended for all developers. In addition to the best practices presented in the body of this document there are helpful real-world tips and training resources linked in the appendix.
+1.3	Objectives
+The main objectives of this document are:
+
+•	Enable Coast Capital Savings Mulesoft Developers to obtain, install and configure the Mulesoft platform components required for development of Coast Capital Savings integrations (Cloudhub, Anypoint Studio, Anypoint Runtime Manager, API Manager and API Analytics)
+•	Describe the steps for setting up a developer workstation
+•	Setup all required supporting tools and software for Coast Capital Savings project work
+•	Describe CI/CD –  continuous integration and deployment –  best practices
+•	Provide simplified design cycles and patterns for individual projects
+•	Promote and encourage reusability of applications and interfaces
+•	Understand and follow the Coast Capital Savings development process flow
+1.4	Audience
+If you are reading this guide, it is assumed that you are writing and/or consuming services written on the Mulesoft platform.  This guide is written by developers, for developers.  Therefore, the reader is expected to have good understanding of Service Oriented Architecture, API Development, SOAP/REST, and MuleSoft.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2	Developer Checklists
+The illustration below shows the best practice for API development lifecycle.
+
+ 
+
+The checklists referenced below document the actual tasks involved in successfully developing Coast Capital Savings integrations in compliance with the lifecycle best practices.
+
+Developer task list:
+
+
+
+Code review checklist:
+
+
+
+If the developer task list is followed carefully, the outcome of the code review will be positive. Non-compliance will affect both the quality of development and the ranking of the developers involved. The code review outcomes will be reviewed monthly to determine overall quality of the developer’s efforts so that adjustments may be made.
+
+
+
+
+
+
+
+
+
+
+3	MuleSoft Anypoint Platform
+
+The MuleSoft Anypoint Platform comprises a complete application and API development suite that can be used to create, integrate, model, build, and deploy services, applications and APIs. The diagram below represents the API platform landscape and how it fits in to Coast Capital Savings existing architecture.
+
+ 
+
+MuleSoft’s Anypoint Platform uses RAML (RESTful API Modeling Language) to describe the APIs. The platform uses RAML to auto-generate interactive API documentation of each API via its own API Portal and uses a web based toolkit, API Designer, to define the RAML. Anypoint Platform comes with management tools to manage the API life cycle and policies, runtime management, and automated publishing of artifacts like RAML, templates and code examples to an Exchange (both private and public) for sharing. It has built in analytics and notification components for full API management. 
+
+Using the Anypoint Platform’s unique capabilities, MuleSoft recommends a new methodology called API-Led connectivity, that connects data to applications through a series of reusable and purposeful modern APIs that are each developed to play a specific role – unlock data from systems, compose data into processes, and/or deliver an experience. This approach essentially has 3 layers, as explained below with illustration:
+Systems APIs: Unlock data from backend and/or SaaS systems like databases, Workday, SAP, Salesforce, ServiceNow, etc., by putting APIs in front of those applications. These form a “System API” layer, which provides consistent, managed, and secure access to these core business systems.  
+Process APIs: Build on the system APIs by combining and streamlining data from multiple sources into a process specific API (breaking down application siloes). These “process APIs” take core assets and combine them with appropriate business logic to create a higher level of value. Importantly, these higher- level objects are now useful assets that can be further reused, so they should also be APIs themselves. Finally, this ‘layer’ allows line of business developers to engage in development without requiring full involvement of central IT resources. 
+Experience APIs: Finally, “experience APIs” are designed specifically for consumption by a specific end- user application or device, with specific permissions. These APIs allow application developers to quickly innovate on projects by consuming the underlying assets, without having to know how the data got there. In fact, if anything changes to any of the systems of processes underneath, it shouldn’t require any changes to the application itself. 
+
+  
+
+
+This approach supports Microservices architecture as well at each layer level. Each discreet API represents micro services on their own with API governance, security and independent deployments. From Coast Capital Savings perspective, all integration development will adhere to these principles as much as possible and wherever applicable. 
+
+
+The following are scenarios where these 3-layered approaches might not be followed: 
+•	Event based integrations where a change in one system needs to be published to another system.  
+•	There is no orchestration, transformation or translation logic required.  
+•	All consumers use same data format and has the same permission levels to the underlying APIs.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4	Development Environment Setup
+4.1	Developer’s workstation
+This setup will ONLY start after an email is received from Coast Capital Savings.
+
+4.1.1	Access request by Manager
+The following requests will be initiated:
+
+•	Loaner Coast Capital Savings Laptop
+•	Coast Capital Savings email account
+•	VPN access
+
+4.1.2	Access request by Developers/Architects
+        Following access request will be initiated via email to the below teams:
+•	Anypoint Studio Set Up
+•	Code Commit
+•	Anypoint Manager Access
+•	Jenkins
+
+4.2	Mule Runtime/Anypoint Studio Setup
+4.2.1	Mule Runtime Hardware Requirements
+The minimum hardware required to run Mule Runtime depends on the application. For example, key factors in determining the RAM required include the acceptable latency and the size and number of simultaneous messages that applications need to process. The following hardware is the recommended minimum:
+•	2 GHz CPU or 1 virtual CPU in virtualized environments
+•	4 GB of RAM
+•	100 GB of storage
+4.2.2	Mule Runtime Software Requirements
+
+Software requirements are:
+•	Java
+o	The next section lists currently supported versions of Java versions. Mule Release Notes lists the Java requirements for previous Mule releases.
+o	An operating system that supports the Java versions listed in supported Java version
+•	Supported Operating System:  the section below lists operating systems that MuleSoft tests and certifies for use with MuleSoft Anypoint Platform and Engine.
+•	For Microsoft Dynamics GP connector use, Java Cryptography Extension (JCE) 8 or JCE 7 unlimited strength jurisdiction policy files
+o	If you do not use this connector, you do not need JCE. Install a JRE or JDK first, then install JCE.
+4.2.3	Supported Java Versions
+
+Oracle JRE 1.8
+Oracle JRE 1.7.0 (recommended: JRE 1.7.0_79/80)
+Oracle JDK 8
+Oracle JDK 7
+IBM JRE 1.8
+IBM JRE 1.7
+OpenJDK 8
+
+Java Installation
+Build software requires JDK 1.8 (found at http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+After installing java you need to set the environment variable JAVA_HOME that points to the base directory for the java install (not the bin directory).
+4.2.4	Anypoint Connector DevKit Requirements
+Anypoint Connector DevKit 3.5 and later is compatible with Mule versions 3.5 and later. DevKit version numbering does not correspond to Mule versions. DevKit 3.9 is compatible with Mule versions 3.5, 3.6, 3.7, and 3.8.
+To take advantage of the latest fixes and improvements, use the current version of MuleSoft with its corresponding DevKit. latest fixes and improvements.
+4.2.5	Install Oracle JDK
+Download and install the latest version of Oracle JDK from Oracle’s update site:
+http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+4.2.6	Download and Install Anypoint Studio
+
+For latest updates, please visit: 
+https://docs.mulesoft.com/anypoint-studio/v/6/download-and-launch-anypoint-studio
+
+Anypoint Studio is the graphical integration design environment of the Anypoint Platform for applications that are deployed to MuleSoft runtime.
+•	Before downloading and launching Anypoint Studio, install Java SE JDK 7 or Java SE JDK 8.
+•	If you are using a Mac computer running OS X or if you are installing Anypoint Studio on a new computer or a fresh installation, you must also install JRE 1.6, which provides important libraries used by later JDK versions. Install JDK 6 first and then install JDK 7 or Java SE JDK 8.
+After installing JDK 7 or 8, you need to change the default Java virtual machine (JVM) from v6 to the later version. 
+Note: The link that is provided above in this section requires the end user to signup for a Anypoint Platform account.  Please collect set of credentials to Coast Capitals organization Developers to go to the support portal -> downloads section and download anything developers might need from there.
+To download and install Anypoint Studio:
+•	Download Anypoint Studio that is compatible with your operating system: Windows, Mac, or Linux, using the link provided above.
+
+
+•	Check to confirm that JDK 7 or JDK 8 is in place on your system. From the command line (Terminal app for a Mac, Command Prompt for Windows), run: java -version
+The response should appear similar to the following for JDK 7:
+1
+2
+3
+	java version "1.7.0_75"
+Java(TM) SE Runtime Environment (build 1.7.0_75-b13)
+Java HotSpot(TM) 64-Bit Server VM (build 24.75-b04, mixed mode)
+•	Unzip the zip file. 
+Windows: It’s important to extract Anypoint Studio into the 'C:\' root folder. Also, if you are using a Windows Anti-Virus application, ensure that the plugin/ and features/ directories are under the “trusted” category.
+OS X: If you’re using OS version Sierra, it’s important that you move your extracted app to the /applications folder before you launch it.
+•	Open Anypoint Studio:
+a.	Windows: Double-click the AnypointStudio.exe file, located in the AnypointStudio directory.
+  
+•	If the wrong version of Java is present on your computer, the following may occur after you start Studio:
+a.	Mac: The command triggers a prompt to install the JDK tools directly from Apple. Follow the instructions to download and install JDK 7 or JDK 8.  See: Running Studio on a Mac
+b.	Windows: This message appears when you start Studio: Incompatible JVM - Version <number> of the JVM is not suitable for this product. Version 1.7 or greater is required. Go to Java SE JDK 7 or Java SE JDK 8, download the JDK, and install it. Then restart AnypointStudio.exe from where you unzipped the software distribution.
+
+•	Click OK to accept the default workspace.
+ 
+•	Anypoint Studio launches, then displays a Welcome page. Click Create a Project to begin development immediately.
+4.2.7	Updating Studio
+Anypoint Studio notifies you when an update is available. You can also check this manually going to Help > Check for Updates
+4.2.8	Installing Extensions
+For latest updates, please visit: 
+https://docs.mulesoft.com/anypoint-studio/v/6/installing-extensions
+
+Beyond the out-of-the-box functionality included in the MuleSoft software distributions, various plugins, modules, connectors, and runtimes for Studio are made available by download. Complete the following procedure to extend the functionality of your instance of MuleSoft Anypoint Studio.
+1.	Under the Help menu in Anypoint Studio, select Install New Software. 
+2.	In the Work with: field in the Install wizard, enter one of the following:
+a.	Use the drop-down menu to select --All Available Sites-- and browse the plugins and modules available for download into Studio
+b.	Use the drop-down menu to select a specific plugin or module
+c.	Enter a specific update site URL from which you wish to download a plugin, module, or connector
+3.	In the table below the filter field (see image below), use the checkboxes to select one or more modules or plugins you wish to install on your instance of Studio (click to expand the folders to select individual items), then click Next. 
+ 
+4.	Review the details of the item(s) you selected, then click Next.
+5.	Click to accept terms and conditions of the product, then click Finish.
+6.	Click Restart Now to complete the installation. 
+4.2.9	Configure Anypoint Platform Credentials
+•	To associate your Anypoint Platform account to your local development environment:
+1.	Open Anypoint Studio Preferences.
+2.	Go to Anypoint Studio > Authentication
+3.	Click the Add button and enter your Anypoint Platform credentials
+4.2.10	 Configure Anypoint Platform Settings in Studio
+Only relevant when API Management is licensed.
+
+During API development and testing, in order for the API application to register with the client’s Anypoint Platform, the client ID and secret for its organization must be configured.
+
+Ask the client’s Anypoint Organization Administrator for the organization Client Id and Client Secret values.  It’s available on the Anypoint Platform Settings (gear icon) page.
+NOTE: Studio defaults to the following configuration.
+
+Enter the corresponding values under Client Credentials in Studio as shown below.
+ 
+
+
+4.2.11	Char Encoding Configuration
+If/when running test scenarios using the mule application locally with the embedded runtime.  Anypoint-Studio’s DataWeave components, on windows machines, will cast the output xml encoding by default as: <?xml version='1.0' encoding='windows-1252'?>
+
+To fix/override this behavior you’ll need to modify the AnypointStudio.ini, located in the app-root for your AnypointStudio.exe, add this argument: -Dfile.encoding=UTF-8    
+  
+Linux/unix/mac users would probably not experience this issue, but there are some windows uses in our group who will. 
+4.3	Repository Setup
+4.3.1	EGit
+EGit is an Eclipse Team provider for Git that can be leveraged in Anypoint Studio for integrating with Git repositories such as GitLab.  Feel free to use other Git plugins for eclipse or a different standalone, UI-based Git tool to integrate Studio with Git repositories.  
+
+More information on EGit can be found here: 
+http://www.eclipse.org/egit/ 
+https://docs.mulesoft.com/mule-user-guide/v/3.3/using-git-with-studio
+
+Add the EGit plugin to Anypoint Studio from the Help | Install New Software menu.
+ 
+
+The “Ecplise Git Team Provider” is the only required piece.  Select it and finish stepping through the install wizard.
+ 
+
+Once installed, apply some basic Git configuration.
+1.	Configure a “Default repository folder”.
+	 
+2.	Add User Settings in Team → Git → Configuration → User Settings
+4.3.2	Github Desktop
+Another options is to install Github desktop on windows. It’s a fast, easy way to manage the software development.
+
+Github desktop installation zip file can be downloaded from here:
+
+After Github desktop download on local machine, click GitHubDesktopSetup.exe to launch – the screenshots that follow illustrate the process.
+
+ 
+
+Click Skip this step
+
+
+
+Enter Name and email
+
+ 
+Then click Finish
+
+
+Click Clone a repository
+
+4.3.3	SourceTree Setup
+
+Below mentioned is the step-by-step procedure to help the new developer setup the local code repository.
+
+Step1:	Go to https://www.sourcetreeapp.com/
+
+Step2:	Click on “Download for Windows”
+          	SourceTreeSetup.exe file gets downloaded.
+
+Step3:	To install SourceTree Plugin, double click the downloaded “SourceTreeSetup.exe” file
+
+Step4:	Click on “Run”
+
+
+
+ 
+
+
+
+Step5:	Select the checkbox, “I agree to the license agreement” and click on “Continue”
+
+
+ 
+Step6:	Click on “Use an existing account”
+
+
+ 
+
+
+Step7:	Click on “Log in with Google”
+
+ 
+
+Step8:	Use your Gmail credentials and that completes the Registration.
+
+ 
+
+
+Step9:	Click on Continue
+
+
+
+ 
+
+
+
+Step10:	Click on Skip Setup
+
+ 
+
+
+Step11:	Click “No”.
+
+
+ 
+
+Step12:	Click on “I don’t want to use Git”
+Source Tree Plugin opens.
+
+ 
+Step13:	Navigate to ToolsOptions and select Git and Select the checkbox, “Disable SSl certificate validation and click “OK”
+
+ 
+
+Step14:	Click on “Clone”
+
+
+
+ 
+Step15:	Enter the required “Code Commit” URL in the “Source Path / URL:” field
+Default names are populated in the “Destination Path:” and “Name:” fields 
+
+
+
+
+Step16: Enter the credentials created
+
+ 
+
+Step17:	Click on “Clone” to complete the Repository Setup.
+
+4.3.4	Project Import – Anypoint Studio
+Following the process in the Section 4.3.3 checks out the code into the local machine.
+
+Current section explains importing the project into Anypoint Studio.
+
+Step1:  Open Anypoint Studio and navigate to File Import and click on Import
+
+ 
+Step2:  Click on “Maven-based Mule Project from pom.xml” and click Next
+
+ 
+
+Step3:  Click on   located beside the POM File, browse the repository and select the required code’s pom.xml file.
+
+ 
+Step4:  Leave the auto-populated Project Name and select the “Mule Server 3.8.3 EE” under Runtime and click Finish.
+
+ 
+
+
+The project gets created in Anypoint Studio. All the related files will be loaded and the maven dependencies will be fetched.
+
+
+
+4.3.5	Code Commit Process
+This section indicates the process of code check in using SourceTree when modifications are made to the existing code, new files added into the project or existing files are deleted from the project.
+
+The initial view of the SourceTree for a particular project is similar to the below screenshot. (This view differs based on the recent changes made on a project)
+
+
+
+
+
+4.3.5.1	Modifications in the Existing File
+
+
+Below is the process to check in the code when the existing file in a project is modified.
+
+When a file is modified and saved in the Anypoint Studio, open the SourceTree and select the project. 
+
+Click on “Working Copy” in the FILE STATUS section. Also select Modified files, sorted by file status.
+
+The modified file will be shown under the Unstaged files and the changes are displayed in the section right side of the Staged files.
+
+
+To check in the changes, select the file under Unstaged files, click on Stage Selected, then the file moves to Staged files section.
+
+ 
+
+
+One final step to commit the changes. Write comments which best explains the changes in the file (It is a good practice to write comments as it helps other developers quickly get to know the modifications made to a file), select the check-box Push changes immediately to origin/master and click on Commit.
+
+
+
+
+
+Check for the reflection of the commit under the master section of the project in SourceTree.
+
+
+4.3.5.2	Adding new file to the Project
+
+When a new file is added to the project, the file can be found inside SourceTree in the Working Copy as Unstaged file under Untracked files, sorted by file status.
+
+After the project is imported into Anypoint Studio from the cloned repository, the newly added files into the project are indicated with a question mark before the file name.
+
+
+
+If you are required to commit this newly added file, first select the file under Unstaged files and click on Stage Selected. Then the file moves to Staged files section and it will be under Pending files, sorted by file status.
+
+
+To commit this file, write the comments about the file/reason for the commit. Select the check-box Push changes immediately to origin/master and click Commit. 
+
+4.3.5.3	Deleting a file from the Project
+
+When a file is deleted from the project, the file can be found inside SourceTree in the Working Copy as Staged file under Pending files, sorted by file status. 
+
+After the project is imported into Anypoint Studio from the cloned repository, the deleted files from the project are indicated with   before the file name.
+
+
+
+
+
+To commit and reflect this change in the project, write the comments about the file/reason for the commit. Select the check-box Push changes immediately to origin/master and click Commit. 
+4.4	Maven Setup
+4.4.1	Install Maven
+Latest Apache maven installation zip file (apache-maven-3.3.9-bin.zip) can be downloaded from here: http://maven.apache.org/download.cgi
+The full installation instructions are here: http://maven.apache.org/install.html
+
+To install on Windows:
+•	Unzip the distribution archive, i.e. apache-maven-3.3.9-bin.zip to the directory you wish to install Maven 3.3.9. These instructions assume you chose C:\Program Files\Apache. The subdirectory apache-maven-3.3.9 will be created from the archive.
+•	Add the unpacked distribution's bin directory to your user PATH environment variable by opening up the system properties, selecting the "Advanced" tab, and the "Environment Variables" button, then adding or selecting the PATH variable in the user variables with the value C:\Program Files\Apache\apache-maven-3.3.9\bin.
+•	In the same dialog, make sure that JAVA_HOME exists in your user variables or in the system variables and it is set to the location of your JDK, e.g. C:\Program Files\Java\jdk1.8.0_101 (or latest 1.8 update).
+•	Open a new command prompt (Winkey + R then type cmd) and run mvn -version to verify that it is correctly installed.
+4.4.2	Configure Studio for Maven Support
+For latest updates, please visit: 
+https://docs.mulesoft.com/anypoint-studio/v/6/maven-support-in-anypoint-studio
+
+After Installing Maven on Local Machine Please Validate Maven Version is Correctly Installed Or not.
+
+A)	Run Maven Version on CMD
+CMD Command to check Maven Version: mvn -version
+ 
+
+B)	Test Maven Version on Anypoint Studio:
+ 
+
+Below are the steps to Mavenize the Mule Project:
+
+1.	Maven integration with Anypoint Studio
+a.	Click on Windows -> Preferences -> Anypoint Studio -> Maven
+b.	Make sure “maven installation home directory” matches your maven install location. Below screenshot uses maven-3.2.3, your maven version may vary.
+
+
+
+2.	Make sure that Anypoint Studio is configured to run with the JDK and not JRE
+a.	Click on Windows -> Preferences to open up the Preferences Panel
+
+ 
+b.	Click on Java -> Installed JREs
+c.	Make sure that it points to a valid jdk and not a jre. Below screenshot uses JDK 1.8.0_66, your JDK may vary. 
+
+ 
+
+3.	Create a New Project
+a.	Click on File -> New -> Mule Project
+b.	Fill out the firm and make sure “Use Maven” is checked
+
+
+
+4.	Adding a new dependency
+a.	Right click on the project -> Mule -> Add Maven Dependency
+b.	Add the artifact information as detailed below. To search for artifacts you can use the official site http://search.maven.org/ or a more easy to use, third part site at http://mvnrepository.com/. 
+
+
+5.	To update the projects dependencies
+a.	Right click on the project -> Mule -> Update Project Dependencies
+
+ 
+
+6.	To run maven project
+a.	Right click on the project -> Run As -> Mule Application with Maven
+
+ 
+
+More information about maven can be found here 
+https://docs.mulesoft.com/mule-user-guide/v/3.8/mule-maven-plugin
+https://docs.mulesoft.com/mule-user-guide/v/3.8/configuring-maven-to-work-with-mule-esb
+https://docs.mulesoft.com/mule-user-guide/v/3.8/continuous-integration
+
+
+4.4.3	Configure Enterprise Artifactory
+In order to access Mule’s enterprise repository, the enterprise repository location along with valid credentials to access it must be configured in the Maven “settings.xml” file that resides in the .m2 directory.  Credentials can be acquired from MuleSoft by opening a support case requesting enterprise repository access. 
+
+Settings.xml (Coast Capital Savings)
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                            http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <pluginGroups>
+        <pluginGroup>org.mule.tools</pluginGroup>
+    </pluginGroups>
+    
+  <servers>
+    <server>
+      <id>MuleRepository</id>
+      <username>CLIENT_USERNAME</username>
+      <password>CLIENT_PASSWORD</password>
+    </server>
+  </servers>
+
+  <profiles>
+    <profile>
+      <id>Mule</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <repositories>
+        <repository>
+          <id>MuleRepository</id>
+          <name>MuleRepository</name>
+          <url>https://repository.mulesoft.org/nexus-ee/content/repositories/releases-ee/</url>
+          <layout>default</layout>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+</settings>
+5	Design Standards and Guidelines
+
+Services and compositions should be designed from the ground up, thus starting with the integration points to the actual business logic and/or services from legacy system, applications, databases etc. It is recommended to create multiple flow files in Mule projects, containing the various endpoints, connector definitions etc. By breaking down a large, monolithic MuleSoft application into smaller flow files, reusability is encouraged. For example, create ‘common’ flow files for often used functionalities, such as basic transformations, audit logging etc. Having multiple flow files in projects can be considered a best practice. 
+
+Keep new flows short and make sure that each flow follows single responsibility principle. For complex solution split the main configuration file (XML files containing flows) into smaller ones. Think in functionality and business logic terms. 
+
+Summarizing, the following design principles should be applied: 
+
+•	Separation of Concerns: Implementation logic must be separated from integration and routing logic, both in Java code and Mule flow files. For example, a high-level flow that is used for service orchestration should not contain any business logic or implementation logic.  
+•	Break down flows: External invocations must be wrapped in services using Mule flows. Each invocation should be in a separate flow.  
+•	Use a data or domain model: Business related data that is being sent between components, services etc., should be captured in a canonical data model, being for example XML, JSON or Java objects (POJOs). For high-volume or memory-heavy applications, consider the use of POJOs. Message or routing related data should be stored in the metadata of the message, such as variables or properties.
+•	Design for efficiency: Mule flows files should be kept as small as possible. All reusable flow elements, or duplicate code, should be extracted into new flow file.
+•	Ensure reusability: Common functionalities are extracted to reusable flow files.  
+•	Reduce coupling: Separate core business logic from base services, like data stores. Build services  in layers and give users as much access as possible to each layer.  
+•	Encourage modularity: Do not create needlessly complex services. Build simple services first, and  only then build the complex orchestrations on top of them. Users will then have the option to  use either. Also, the following generic integration design principles should be applied: 
+•	Avoid point-to-point integrations: Build services by orchestrating other services, and build services that could be integrated together in the future. Reuse services whenever possible, and plan for services to be reused by others. 
+
+ 
+•	Avoid hardcoding configuration values: Externalize all tunable values, and configuration parameters, to properties files. There should be one properties file to store parameters common to all environments, and a set of environment-specific property files.  
+•	Use both synchronous and asynchronous integration: Know which integration pattern to apply in each case. Synchronous integrations will give more feedback, but asynchronous integrations will work faster and will work better when integrating slow services.  
+•	Use the correct constructs for the job: use flows for interactive services and batch processes to maximize throughput in cases where latency doesn't matter.  
+5.1	Standard flows reusable by multiple integrations 
+Flows that can be used by multiple integrations must be standardized, tested, and packaged for effective and reliable reuse.  Reusable, packaged flows must be (for the source) version-controlled and (for the packaged binary jar) be put in an access-controlled binary-artifact. This approach will give confidence that all users who are using the same versioned-artifact are using the same flow-functionality. 
+Configurations for the following values are to be externalized to property-files.  
+•	Host-names 
+•	URLs and base-path of URLs  
+•	Port numbers  
+•	File-paths (eg. as used in SFTP connector)  
+•	User-names  
+•	Timeout parameters, TTLs, object-store parameters  
+•	Passwords must be encrypted  
+		Property-names  
+•	Use property-names that are intuitive and informative. 
+•	Define a consistent 'hierarchy' for property-groups  
+•	Group related properties together in properties-files; separate groups by a blank-line 
+•	Use comments in properties-files at the top of each section  
+•	Use only truly industry-standard acronyms as parts of property-names; made up acronyms these  confuse users.  
+o Exception: customer-mandated/common-usage acronyms 
+o Correct: http, sftp, nio, tcp 
+o Incorrect: anything that has been made up  
+•	If any customer-mandated property-names are cryptic, put a comment above stating the meaning  
+Certain practices can make flows easier to follow and troubleshoot: 
+•	Use flow-ref components to limit the vertical and horizontal spread of flow-lines: do not nest any "flow- diverging" (choice, scatter-gather) deeper than 3 levels. 
+Keep in mind that many MuleSoft developers work on laptops, not 24" monitors. Having to repeatedly scroll left or right in Message Flow view, or scroll up and down pages of XML to trace a flow impairs ability to understand a flow. 
+Properly decompose integration-tasks into logical pieces where each flow has a well-defined responsibility within the larger task. 
+Many applications still rely on relational databases and use deeply nested object-structures. If the inserts are done using sequential JDBC-connectors, ensure that flows which persist deeply-nested objects into databases: 
+o	Are well-designed and clearly documented  
+o	Use transactions so that partial database-inserts do not occur.  
+•	Design flows with data-integrity in mind:  Use transaction-scope effectively by designing flows to minimize the inclusion of extraneous operations and connectors in the transaction-scope  
+5.2	General Guidelines
+
+•	Unused flows/sub-flows must be removed before committing to version-control! 
+o	Do not comment flows, sub-flows, global-declarations, transformers or components without a dated note explaining why it has not been deleted. 
+NOTE: Do not repeat the words that are already in the element or icon-name - it just wastes space and creates pointless clutter.  
+•	All flows, sub-flows, components, transformers, scopes (of any kind, including transactions) must be given brief, descriptive names. 
+
+o	Incorrect:  
+•	For each (uninformative) Set Payload (uninformative). 
+•	The element and icon both contain the words set payload.  Label this in ways that add information. 
+o	Correct:  
+•	For each product (immediately obvious). Coupled with nearby operations or connectors that refer to a product database or web-service, concise names promote comprehension.  
+•	For example: a set-payload element might instead be labeled as accountDetails.  
+NOTE: Do not leave connectors, scopes etc. with default names (eg. Bean, Database, Logger, SMTP, Variable, Choice). The goal is to allow maximum comprehension of flow logic. 
+Syntax and Best Practices 
+	Access Map or List element by the key using square brackets [ ]. 
+	Correct: 
+o	flowVars['counter'] 
+o	message.payload['userId'] 
+o	message.inboundProperties['params'][0] 
+	Not recommended: 
+o	flowVars.counter 
+o	payload.'userId' 
+o	message.inboundProperties.'params'(0) 
+	Note: The reason for this recommendation is that the expression message.inboundProperties['http.query.params'].testing fails to evaluate even when the parameter testing is present in the query. 
+5.2.1	Message Properties 
+•	Use <set-property> when setting one message-property. <set-property propertyName="header" value="foobar"/> 
+•	Use <message-properties-transformer> when setting multiple message-properties in one location: 
+o	<message-properties-transformer> <add-message-property key="header" value="foobar"/> <add-message-property key="apple" value="pie"/> </message-properties-transformer> 
+5.2.2	Session Properties 
+"Session" in Mule is not the same as "session" for web-applications. 
+WARNING: Do not use session properties! Session properties are serialized and added to message headers when dispatched over some transport boundaries, increasing the size of the message and consuming bandwidth: 
+o	Use flow variables to pass values between flows.  
+o	When crossing transport-boundaries, pass essential data using the header supported by the transport in question, or in the payload  
+5.2.3	Flow Best Practices:
+•	Create a common configuration file to contain connectors, property placeholders and commonflows. If you are on-premises and using a domain project, then it is essential that each common file be named uniquely. I would suggest the formatting each file prefixed with the application name.
+•	Create an exception handler configuration file for the application specific exception strategy to be referenced by all the flows.
+•	Organize your application into a series of steps where each step moves the message from on transactional store to another.
+•	Use reliability patterns when it is necessary for guaranteed delivery.
+•	Design your code into logical flows and configuration files to maintain best practices for readability, reusability and maintainability.
+5.3	Developing for Optimal Performance 
+
+Keep applications synchronous if possible: Synchronous flows avoid serialization/deserialization of messages sent through VM queues, do not cause context switches, and do not cause contention when messages move across thread pools. 
+ 
+Store as little as possible in session variables: The session scope is serialized and de-serialized every time a message crosses an endpoint, even if it is a VM endpoint. This will impact performance overhead in direct proportion to the size of session variables and the number of endpoints.  
+
+
+
+Use bean payloads whenever possible The usage of a canonical data model is recommended for projects that deal with data (mapping, transformation etc). It is also recommended to create them in Java objects whenever possible, as this provides the fastest format to access fields and change information and to convert to other formats. 
+
+Encourage MEL usage over Groovy and other scripting languages For better performance, use MEL for simple data extraction from messages, and Java components for everything else. Scripting languages introduce extra complexity to the operations coded in them because they are dynamically typed. Some are even interpreted at runtime, instead of compiled during startup, making the process even slower.  
+
+Use flow references instead of VM endpoints To communicate between flows internally within an application, use flow references instead of VM endpoints. The VM connector, even though it is an in-memory protocol, emulates transport semantics that serialize and de-serialize parts of your messages, most notably the Session scope. This makes it slower than a flow reference, which just injects messages into the referenced flow with no intermediate steps. Please note that in some cases the usage of VM endpoints is preferred (see the chapter on reliability patterns). For example, a Mule cluster can load balance applications that use VM endpoints by deferring executing to another, available node in the cluster.  
+
+Cache aggressively Take advantage of Mule’s caching scope when making requests to external resources like Web services or databases. Also consider caching reusable assets such as security tokens or ephemeral API keys and cookies. Mule’s Notification subsystem can additionally be used to “warm up” a cache when Mule starts. For example, consider doing this for situations where a initial cache miss is not acceptable.  
+
+Configure message processors and endpoints at the global level Some connectors allow you to configure some parameters at both the global and the endpoint/message processor level. We recommend placing the configuration at a global level to avoid repeated initialization of resources.  
+
+Use the async scope when appropriate If a flow is performing processing on a message that is neither modifying the message nor changing how it is routed, then it could be wrapped in an async block. This will cause the processing to occur in a different thread and will avoid adding unnecessary overhead to processing the message.
