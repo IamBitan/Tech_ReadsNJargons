@@ -25,42 +25,6 @@ If you are reading this guide, it is assumed that you are writing and/or consumi
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 2	Developer Checklists
 The illustration below shows the best practice for API development lifecycle.
 
@@ -77,12 +41,6 @@ Code review checklist:
 
 
 If the developer task list is followed carefully, the outcome of the code review will be positive. Non-compliance will affect both the quality of development and the ranking of the developers involved. The code review outcomes will be reviewed monthly to determine overall quality of the developer’s efforts so that adjustments may be made.
-
-
-
-
-
-
 
 
 
@@ -110,33 +68,6 @@ The following are scenarios where these 3-layered approaches might not be follow
 •	Event based integrations where a change in one system needs to be published to another system.  
 •	There is no orchestration, transformation or translation logic required.  
 •	All consumers use same data format and has the same permission levels to the underlying APIs.  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
